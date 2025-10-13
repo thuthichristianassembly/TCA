@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <title>📖 தமிழ் வேதாகம வினா வினா</title>
+  <style>
+   body {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  background-image: url("../images/bg1.jpg");
+  background-size: cover;        /* Makes image cover entire screen */
+  background-position: center;   /* Centers the image */
+  background-repeat: no-repeat;  /* Prevents tiling */
+  background-attachment: fixed;  /* Keeps image fixed while scrolling (optional) */
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+  min-height: 100vh;             /* Ensures body always fills the screen */
+}
+
+    h1 {
+      color: #ffffff;
+    }
+    #quiz-box {
+      background: #000000;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 30px auto;
+    }
+    button {
+      margin: 8px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #6200ea;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #3700b3;
+    }
+    #score {
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📖 தமிழ் வேதாகம வினா வினா</h1>
+  <div id="score">⏳ ஏற்றப்படுகிறது...</div>
+  <div id="quiz-box">வேதாகமம் ஏற்றப்படுகிறது...</div>
+
+  <script>
+    const BIBLE_URL = "../bibleverse/bible.json"; // adjust path if needed
+    let bibleData = [];
+    let quizVerses = [];
+    let currentQuestion = 0;
+    let score = 0;
+    const totalQuestions = 10;
+
+    async function loadBible() {
+      const box = document.getElementById("quiz-box");
+      try {
+        const res = await fetch(BIBLE_URL);
+        if (!res.ok) throw new Error("Fetch failed");
+        const data = await res.json();
+        bibleData = [];
+
+        // Flatten Book → Chapter → Verse format
+        for (const b of data) {
+          if (!b.Book) continue;
+          for (const book of b.Book) {
+            if (!book.Chapter) continue;
+            for (const chapter of book.Chapter) {
+              if (!chapter.Verse) continue;
+              for (const verse of chapter.Verse) {
+                bibleData.push({
+                  id: verse.Verseid,
+                  text: verse.Verse
+                });
+              }
+            }
+          }
+        }
+
+        if (bibleData.length < 4) throw new Error("Not enough data");
+
+        startQuiz();
+      } catch (err) {
+        console.error("பிழை:", err);
+        box.innerHTML = "❌ பிழை: வேதாகமத்தை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்க்கவும்.";
+      }
+    }
+
+    function startQuiz() {
+      quizVerses = bibleData.sort(() => 0.5 - Math.random()).slice(0, totalQuestions);
+      currentQuestion = 0;
+      score = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const box = document.getElementById("quiz-box");
+      const scoreDiv = document.getElementById("score");
+
+      if (currentQuestion >= totalQuestions) {
+        box.innerHTML = `🎉 வினா முடிந்தது!<br>மொத்த மதிப்பெண்: ${score}/${totalQuestions}`;
+        scoreDiv.innerHTML = "✅ சிறந்த முயற்சி!";
+        return;
+      }
+
+      const q = quizVerses[currentQuestion];
+      const correctText = q.text;
+
+      // Pick 3 random wrong verses
+      const wrongOptions = bibleData
+        .filter(v => v.text !== correctText)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      // Combine & shuffle all options
+      const options = [...wrongOptions.map(v => v.text), correctText].sort(() => 0.5 - Math.random());
+
+      // Display
+      scoreDiv.innerHTML = `வினா ${currentQuestion + 1} / ${totalQuestions} | மதிப்பெண்: ${score}`;
+      box.innerHTML = `
+        <h3>இந்த வசனத்தை பூர்த்தி செய்க:</h3>
+        <p><b>${correctText.substring(0, Math.floor(correctText.length * 0.5))}...</b></p>
+        ${options.map(opt => `<button onclick="checkAnswer('${opt.replace(/'/g, "\\'")}','${correctText.replace(/'/g, "\\'")}')">${opt}</button>`).join('')}
+      `;
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        score++;
+        alert("✅ சரியான பதில்!");
+      } else {
+        alert("❌ தவறு!");
+      }
+      currentQuestion++;
+      showQuestion();
+    }
+
+    loadBible();
+  </script>
+</body>
+</html>

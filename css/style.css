@@ -1,0 +1,400 @@
+:root{
+  --red: #e71717;
+  --gold-dark: #a87812;
+  --white: #ffffff;
+  --black: #000000;
+  --muted: #f6f5f3;
+  --glass-bg: rgba(255,255,255,0.72);
+}
+
+/* Global */
+html, body {
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
+  background-image: url("../images/bg1.jpg");
+  background-size: cover;          /* ensures image covers full screen */
+  background-position: center;     /* keeps it centered */
+  background-repeat: no-repeat;    /* prevents tiling */
+  background-attachment: fixed;    /* gives smooth parallax-like effect */
+  color: #ffffff;
+  padding-top: 41px; /* for fixed nav */
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;               /* fixed at top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;            
+  padding: 0 30px;
+  display: flex;
+  align-items: center;      
+  justify-content: space-between; /* brand left, menu right */
+  font-size: 1.1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+
+  backdrop-filter: blur(6px);
+  background-image: url("../images/header.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+}
+
+/* Navbar Brand (Left) */
+.navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--red) !important;        /* gold color */
+  text-shadow: 2px 2px 8px var(--black);  /* gold with white shadow */
+  position: absolute;
+  left: 25%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+  z-index: 1001;
+}
+
+/* Navbar Links (Right) */
+/* Navbar container */
+/* .navbar .navbar-nav {
+  display: flex;
+  align-items: center;
+  background-color: #f6f5f3;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+} */
+
+/* Navbar links */
+.navbar .nav-link {
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff !important;
+  font-weight: 600;
+  margin-left: 1.5rem;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+/* Hover underline animation */
+.navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  left: 0;
+  bottom: -5px;
+  background: linear-gradient(90deg, #FFD700, #FF4500);
+  transition: 0.4s;
+  border-radius: 3px;
+}
+
+.navbar .nav-link:hover::after {
+  width: 100%;
+}
+
+.navbar .nav-link:hover {
+  color: #FF4500 !important;
+  text-shadow: 0 0 8px rgba(255, 69, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+/* ========== Mobile Side Nav Styling ========== */
+/* Desktop / Laptop: keep horizontal menu */
+
+
+
+
+/* HERO */
+.hero {
+  position: relative;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vw;   /* extra width to cover wide screens */
+  height: 120vh;  /* extra height to cover tall screens */
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.video-bg iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vw;   /* make iframe bigger than container */
+  height: 120vh;
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#fallbackSlider img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* carousel sits above video by default; script may hide it to reveal video */
+.carousel-bg .carousel-inner img { width:100%; height:100%; object-fit:cover; filter:brightness(.75); }
+
+/* overlay */
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff; /* bright red text */
+  padding: 80px 20px;
+  text-shadow:
+    2px 2px 8px #000000,  /* strong black shadow */
+    0 0 15px #a10000;     /* soft red glow for depth */
+}
+
+.hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight:800; letter-spacing: -0.02em;color: white; }
+.badge-gold { display:inline-block; background: linear-gradient(90deg,var(--red)); color:#ffffff; padding:6px 12px; border-radius:30px; font-weight:700; box-shadow: 0 6px 18px rgba(167,117,20,0.15); }
+
+/* GLASS */
+.glass {
+  background: var(--glass-bg);
+  border-radius:14px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(49,49,49,0.06);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* SERVICES CARDS */
+.service-card { border-radius:12px; overflow:hidden; position:relative; cursor:pointer; min-height:240px; transition:transform .28s ease, box-shadow .28s ease; }
+.service-card:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(0,0,0,0.08); }
+.service-card img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity .28s ease; }
+.service-info { position:absolute; left:0; bottom:0; width:100%; background:linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0,0,0,0.35)); color:#fff; }
+.service-info h5 { margin:12px; font-weight:700; }
+
+/* overlay that shows verse on hover */
+.service-overlay {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+  color:#222; transform: translateY(8px); opacity:0; transition:all .28s ease;
+}
+.service-card:hover .service-overlay { transform: translateY(0); opacity:1; }
+.service-card:hover img { opacity:0.18; }
+
+/* Prayer form */
+.btn-gold {
+  background: linear-gradient(90deg,var(--gold),var(--gold-dark));
+  border: none;
+  color: #fb0000;
+  font-weight:700;
+}
+.btn-gold:hover { filter:brightness(.95); }
+
+/* QUIZ */
+#optionsBox .option {
+  display:block;
+  margin-bottom:8px;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  border:1px solid rgba(0,0,0,0.06);
+}
+#optionsBox .option:hover { background:rgba(0,0,0,0.03); }
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  line-height: 1.6;
+}
+.glass ul li {
+  margin-bottom: 0.6rem;
+}
+.glass strong {
+  color: #e10c0c; /* gold highlight */
+}
+
+/* Responsive */
+@media (max-width:767px){
+  .hero-overlay { padding:40px 16px; }
+  .service-card { min-height:180px; }
+}
+
+/* Fix hero video height for larger screens */
+@media (max-width: 992px) {
+  .hero {
+    height: 40vh; /* reduce slightly to fit navbar and avoid black edges */
+  }
+
+  .video-bg,
+  .video-bg iframe {
+    width: 110vw; /* maintain fill */
+    height: 110vh; /* stretch a bit more for large screens */
+  }
+
+  #fallbackSlider img {
+    height: 90vh; /* match hero */
+    object-fit: cover;
+  }
+
+}
+/* Desktop: keep brand on left */
+
+
+/* Mobile / tablet: center brand and adjust weight */
+@media (max-width: 991px) {
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 600;
+    text-align: center;
+    z-index: 1101; /* above toggler */
+  }
+}
+/* Tablet: 768px to 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  #about .row {
+    color: #ffffff;
+    flex-direction: column; /* stack image and text */
+    align-items: center;
+  }
+
+  #about .col-md-6 {
+    width: 100%; /* full width for both image and text */
+    max-width: 800px; /* optional: prevent very large card */
+    text-align: center;
+  }
+
+  #about .glass {
+    width: 90%; /* make the card wider */
+    padding: 30px;
+    margin: 0 auto; /* center card */
+  }
+
+  #about img {
+    width: 100%;
+    max-width: 800px; /* image fills card width */
+    margin-bottom: 25px;
+    border-radius: 12px;
+    display: block;
+  }
+
+  #about ul li {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+    text-align: left; /* list left-aligned for readability */
+  }
+
+  #about h3 {
+    font-size: 1.8rem;
+    color: #ffffff;
+  }
+
+  #about p, #about ul li {
+    color: #ffffff;
+    line-height: 1.6;
+  }
+}
+/* ===== Contact Section ===== */
+#contact {
+  text-align: center;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fefefe;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 10px rgba(255, 69, 0, 0.4);
+  animation: fadeInDown 1s ease;
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.contact-card {
+  width: 300px;
+  padding: 30px 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.contact-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(255, 69, 0, 0.4);
+}
+
+.contact-icon {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #ffcc70, #ff8177);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: iconPulse 2s infinite ease-in-out;
+}
+
+.contact-card h5 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.contact-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #f9f9f9;
+}
+
+/* Subtle animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .contact-card {
+    width: 90%;
+  }
+}
