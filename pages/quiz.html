@@ -3,48 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <title>📖 தமிழ் வேதாகம வினா வினா</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-   body {
-  font-family: 'Noto Sans Tamil', sans-serif;
-  background-image: url("../images/bg1.jpg");
-  background-size: cover;        /* Makes image cover entire screen */
-  background-position: center;   /* Centers the image */
-  background-repeat: no-repeat;  /* Prevents tiling */
-  background-attachment: fixed;  /* Keeps image fixed while scrolling (optional) */
-  color: #ffffff;
-  text-align: center;
-  margin: 0;
-  padding: 30px;
-  min-height: 100vh;             /* Ensures body always fills the screen */
-}
+    body {
+      font-family: 'Noto Sans Tamil', sans-serif;
+      background-image: url("../images/bg1.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     h1 {
       color: #ffffff;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
     }
+
     #quiz-box {
-      background: #000000;
+      background: rgba(0,0,0,0.85);
       padding: 25px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       max-width: 600px;
+      width: 90%;
       margin: 30px auto;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
+
+    #quiz-box.show { opacity: 1; }
+
     button {
-      margin: 8px;
-      padding: 10px 18px;
+      margin: 8px 5px;
+      padding: 10px 16px;
       border: none;
       border-radius: 10px;
       background-color: #6200ea;
       color: white;
       cursor: pointer;
-      transition: 0.2s;
+      transition: transform 0.1s, background-color 0.2s;
+      font-size: 1rem;
+      word-wrap: break-word;
     }
-    button:hover {
-      background-color: #3700b3;
-    }
+
+    button:hover { background-color: #3700b3; }
+    button:active { transform: scale(0.95); }
+
+    button.correct { background-color: #28a745 !important; }
+    button.wrong { background-color: #dc3545 !important; animation: shake 0.3s; }
+
     #score {
       margin-bottom: 15px;
       font-weight: bold;
+      font-size: 1.1rem;
+      transition: opacity 0.3s;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+
+    @media(max-width: 600px) {
+      #quiz-box { padding: 15px; width: 95%; }
+      h1 { font-size: 1.5rem; margin-top: 10px; }
+      button { font-size: 0.95rem; padding: 8px 12px; }
     }
   </style>
 </head>
@@ -54,7 +91,7 @@
   <div id="quiz-box">வேதாகமம் ஏற்றப்படுகிறது...</div>
 
   <script>
-    const BIBLE_URL = "../bibleverse/bible.json"; // adjust path if needed
+    const BIBLE_URL = "../bibleverse/bible.json";
     let bibleData = [];
     let quizVerses = [];
     let currentQuestion = 0;
@@ -69,7 +106,6 @@
         const data = await res.json();
         bibleData = [];
 
-        // Flatten Book → Chapter → Verse format
         for (const b of data) {
           if (!b.Book) continue;
           for (const book of b.Book) {
@@ -77,17 +113,13 @@
             for (const chapter of book.Chapter) {
               if (!chapter.Verse) continue;
               for (const verse of chapter.Verse) {
-                bibleData.push({
-                  id: verse.Verseid,
-                  text: verse.Verse
-                });
+                bibleData.push({ id: verse.Verseid, text: verse.Verse });
               }
             }
           }
         }
 
         if (bibleData.length < 4) throw new Error("Not enough data");
-
         startQuiz();
       } catch (err) {
         console.error("பிழை:", err);
@@ -109,39 +141,60 @@
       if (currentQuestion >= totalQuestions) {
         box.innerHTML = `🎉 வினா முடிந்தது!<br>மொத்த மதிப்பெண்: ${score}/${totalQuestions}`;
         scoreDiv.innerHTML = "✅ சிறந்த முயற்சி!";
+        box.classList.add('show');
         return;
       }
 
       const q = quizVerses[currentQuestion];
-      const correctText = q.text;
+      const words = q.text.replace(/[.,]/g,'').split(/\s+/);
+      const correctWord = words[Math.floor(Math.random() * words.length)];
+      const questionText = q.text.replace(correctWord, "----");
 
-      // Pick 3 random wrong verses
-      const wrongOptions = bibleData
-        .filter(v => v.text !== correctText)
+      const wrongWords = bibleData
+        .filter(v => v.text !== q.text)
+        .map(v => v.text.replace(/[.,]/g,'').split(/\s+/)[Math.floor(Math.random() * v.text.split(/\s+/).length)])
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
-      // Combine & shuffle all options
-      const options = [...wrongOptions.map(v => v.text), correctText].sort(() => 0.5 - Math.random());
+      const options = [correctWord, ...wrongWords].sort(() => 0.5 - Math.random());
 
-      // Display
-      scoreDiv.innerHTML = `வினா ${currentQuestion + 1} / ${totalQuestions} | மதிப்பெண்: ${score}`;
-      box.innerHTML = `
-        <h3>இந்த வசனத்தை பூர்த்தி செய்க:</h3>
-        <p><b>${correctText.substring(0, Math.floor(correctText.length * 0.5))}...</b></p>
-        ${options.map(opt => `<button onclick="checkAnswer('${opt.replace(/'/g, "\\'")}','${correctText.replace(/'/g, "\\'")}')">${opt}</button>`).join('')}
-      `;
+      // Animate score fade
+      scoreDiv.style.opacity = 0;
+      setTimeout(() => {
+        scoreDiv.innerHTML = `வினா ${currentQuestion + 1} / ${totalQuestions} | மதிப்பெண்: ${score}`;
+        scoreDiv.style.opacity = 1;
+      }, 200);
+
+      // Show question
+      box.classList.remove('show');
+      setTimeout(() => {
+        box.innerHTML = `
+          <h3>வாக்கியத்தை பூர்த்தி செய்க:</h3>
+          <p><b>${questionText}</b></p>
+          ${options.map(opt => `<button onclick="selectAnswer(this,'${correctWord}')">${opt}</button>`).join('')}
+        `;
+        box.classList.add('show');
+      }, 50);
     }
 
-    function checkAnswer(selected, correct) {
-      if (selected === correct) {
-        score++;
-        alert("✅ சரியான பதில்!");
-      } else {
-        alert("❌ தவறு!");
+    function selectAnswer(button, correct) {
+      const allButtons = button.parentElement.querySelectorAll('button');
+      allButtons.forEach(btn => {
+        btn.disabled = true;
+        if(btn.textContent === correct) btn.classList.add('correct');
+        else if(btn === button) btn.classList.add('wrong');
+      });
+
+      // Fill in the blank if correct
+      if(button.textContent === correct){
+        const p = button.parentElement.querySelector('p b');
+        p.textContent = p.textContent.replace('----', correct);
+        p.style.color = '#28a745';
       }
+
+      if(button.textContent === correct) score++;
       currentQuestion++;
-      showQuestion();
+      setTimeout(showQuestion, 1200);
     }
 
     loadBible();
