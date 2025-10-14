@@ -196,6 +196,22 @@ html, body {
   box-shadow: 0 10px 30px rgba(49,49,49,0.06);
   border: 1px solid rgba(255,255,255,0.6);
 }
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.service-card:hover::before {
+  left: 125%;
+  transition: left 0.8s ease;
+}
 
 /* SERVICES CARDS */
 .service-card {
@@ -205,6 +221,13 @@ html, body {
   border-radius: 12px;
   transition: transform 0.3s ease;
 }
+.service-card:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+  transition: all 0.4s ease-in-out;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
 
 .service-card img {
   width: 100%;
@@ -450,5 +473,140 @@ html, body {
 @media (max-width: 500px) {
   .hero {
     height: 30vh; /* reduce slightly to fit navbar and avoid black edges */
+  }
+}
+
+/* ========== ❄️ SNOWBALLS ANIMATION ========== */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Create variety for multiple flakes */
+.snowflake:nth-child(3n) {
+  width: 6px;
+  height: 6px;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+.snowflake:nth-child(3n+1) {
+  width: 10px;
+  height: 10px;
+  animation-duration: 12s;
+  animation-delay: 1s;
+}
+.snowflake:nth-child(3n+2) {
+  width: 7px;
+  height: 7px;
+  animation-duration: 10s;
+  animation-delay: 2s;
+}
+
+/* ========== 🎄 CHRISTMAS TREE ========== */
+.tree {
+  position: relative;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 70px solid #228B22;
+  filter: drop-shadow(0 0 10px rgba(34,139,34,0.5));
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+/* Tree trunk */
+.tree::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  bottom: -20px;
+  width: 20px;
+  height: 20px;
+  background: #8B4513;
+  border-radius: 2px;
+}
+
+/* Tree glow animation */
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 6px #90ee90);
+  }
+  to {
+    filter: drop-shadow(0 0 15px #00ff00);
+  }
+}
+
+/* Add tiny balls on tree */
+
+
+@keyframes twinkle {
+  from { opacity: 0.6; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.3); }
+}
+
+/* 🎄 CHRISTMAS BALLS ANIMATION */
+.glass {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Common ball design */
+.christmas-ball {
+  position: absolute;
+  bottom: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #ff4500);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  animation: jumpBall 2.5s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+/* Multiple balls with staggered positions and delays */
+.christmas-ball:nth-child(1) {
+  left: 15%;
+  animation-delay: 0s;
+}
+.christmas-ball:nth-child(2) {
+  left: 45%;
+  background: radial-gradient(circle at 30% 30%, #ff4d4d, #d40000);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+  animation-delay: 0.4s;
+}
+.christmas-ball:nth-child(3) {
+  left: 75%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #cccccc);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+  animation-delay: 0.8s;
+}
+
+/* Jump animation */
+@keyframes jumpBall {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
   }
 }
