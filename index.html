@@ -221,48 +221,46 @@
   </div>
 </section>
 
-    
- <section id="messages" class="my-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Today's Word</h3>
-        <small id="verseRef" class="text-muted"></small>
-      </div>
-      <div class="p-4 glass">
-        
-           <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-        <p id="dailyVerse" class="mb-0 fs-5">Loading today's verse...</p>
-      </div>
-    </section>
-    <script>  /* ================== 5) Load Daily Verse ================== */
-  async function loadDailyVerse() {
-    const verseEl = document.getElementById('dailyVerse');
-    const refEl = document.getElementById('verseRef');
-    try {
-      // Adjust path: move JSON to same folder as HTML or inside repo
-    const res = await fetch("tamil_verses.json"); // root-relative path
+  <section id="messages" class="my-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Today's Word</h3>
+  </div>
+  <div class="p-4 glass">
+    <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
+    <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
+    <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
+    <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
+    <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
+    <p id="dailyVerse" class="mb-0 fs-5">Loading today's verse...</p>
+  </div>
+</section>
 
-      const verses = await res.json();
+<script>
+async function loadDailyVerse() {
+  const verseEl = document.getElementById('dailyVerse');
+  try {
+    const res = await fetch("tamil_verses.json");
+    const verses = await res.json();
 
-      const now = new Date();
-      const start = new Date(now.getFullYear(),0,0);
-      const diff = now - start;
-      const oneDay = 1000*60*60*24;
-      const dayOfYear = Math.floor(diff/oneDay)-1;
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay) - 1;
 
-      const verse = verses[dayOfYear % verses.length];
-      refEl.textContent = verse.reference;
-      verseEl.textContent = verse.text;
-    } catch(err) {
-      console.error('Error loading daily verse:', err);
-      verseEl.textContent = "Unable to load verse at the moment.";
-      refEl.textContent = "";
-    }
+    const verse = verses[dayOfYear % verses.length];
+
+    // Display text and reference cleanly
+    verseEl.innerHTML = `${verse.text} <br><small class="text-muted">— ${verse.reference}</small>`;
+
+  } catch (err) {
+    console.error('Error loading daily verse:', err);
+    verseEl.textContent = "Unable to load verse at the moment.";
   }
-  loadDailyVerse();</script>
+}
+loadDailyVerse();
+</script>
+
     <!-- PRAYER FORM -->
    <section id="prayer" class="my-5">
   <h3>Prayer Request</h3>
