@@ -12,7 +12,7 @@ html, body {
   height: 100%;
   font-family: 'Montserrat', sans-serif;
   scroll-behavior: smooth;
-  background-image: url("../images/bg1.jpg");
+  background-image: url("../images/bg2.webp");
   background-size: cover;          /* ensures image covers full screen */
   background-position: center;     /* keeps it centered */
   background-repeat: no-repeat;    /* prevents tiling */
