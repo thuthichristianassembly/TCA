@@ -6,6 +6,9 @@
   --muted: #f6f5f3;
   --glass-bg: rgba(255,255,255,0.72);
 }
+.text-muted {
+  color: #FFD700 !important; /* Gold color */
+}
 
 /* Global */
 html, body {
@@ -609,4 +612,13 @@ html, body {
   50% {
     transform: translateY(-25px);
   }
+}
+.church-img {
+  animation: swing 5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes swing {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
 }
