@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <title>📖 தமிழ் வேதாகம வினா வினா</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Noto Sans Tamil', sans-serif;
       background-image: url("../images/bg1.jpg");
@@ -19,6 +26,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: -1;
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     h1 {
@@ -26,62 +51,196 @@
       font-size: 1.8rem;
       margin-bottom: 20px;
       text-align: center;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     #quiz-box {
-      background: rgba(0,0,0,0.85);
+      background: rgba(0, 0, 0, 0.85);
       padding: 25px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       max-width: 600px;
       width: 90%;
       margin: 30px auto;
       box-sizing: border-box;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      transform: translateY(20px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
     }
 
-    #quiz-box.show { opacity: 1; }
+    #quiz-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(98, 0, 234, 0.1),
+        transparent
+      );
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    #quiz-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     button {
       margin: 8px 5px;
       padding: 10px 16px;
       border: none;
       border-radius: 10px;
-      background-color: #6200ea;
+      background: linear-gradient(135deg, #6200ea, #3700b3);
       color: white;
       cursor: pointer;
-      transition: transform 0.1s, background-color 0.2s;
+      transition: all 0.3s ease;
       font-size: 1rem;
       word-wrap: break-word;
+      box-shadow: 0 4px 15px rgba(98, 0, 234, 0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Noto Sans Tamil', sans-serif;
+      font-weight: 500;
     }
 
-    button:hover { background-color: #3700b3; }
-    button:active { transform: scale(0.95); }
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
 
-    button.correct { background-color: #28a745 !important; }
-    button.wrong { background-color: #dc3545 !important; animation: shake 0.3s; }
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #7c4dff, #6200ea);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(98, 0, 234, 0.6);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button.correct {
+      background: linear-gradient(135deg, #28a745, #20c997) !important;
+      box-shadow: 0 4px 20px rgba(40, 167, 69, 0.6) !important;
+      animation: correctPulse 0.6s ease;
+    }
+
+    button.wrong {
+      background: linear-gradient(135deg, #dc3545, #c82333) !important;
+      box-shadow: 0 4px 20px rgba(220, 53, 69, 0.6) !important;
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1.05); }
+      75% { transform: scale(1.1); }
+    }
 
     #score {
       margin-bottom: 15px;
       font-weight: bold;
       font-size: 1.1rem;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(135deg, rgba(98, 0, 234, 0.8), rgba(55, 0, 179, 0.8));
+      padding: 12px 20px;
+      border-radius: 10px;
+      animation: slideDown 0.8s ease-out 0.3s both;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     @keyframes shake {
       0% { transform: translateX(0); }
-      20% { transform: translateX(-5px); }
-      40% { transform: translateX(5px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-      100% { transform: translateX(0); }
+      20% { transform: translateX(-8px) rotate(-2deg); }
+      40% { transform: translateX(8px) rotate(2deg); }
+      60% { transform: translateX(-8px) rotate(-2deg); }
+      80% { transform: translateX(8px) rotate(2deg); }
+      100% { transform: translateX(0) rotate(0); }
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #ffd700;
+      animation: fadeInScale 0.5s ease-out;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      animation: fadeInScale 0.6s ease-out 0.2s both;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @media(max-width: 600px) {
       #quiz-box { padding: 15px; width: 95%; }
       h1 { font-size: 1.5rem; margin-top: 10px; }
       button { font-size: 0.95rem; padding: 8px 12px; }
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #6200ea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
