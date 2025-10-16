@@ -1,415 +1,1411 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thuthi Christian Assembly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    :root {
+      --primary: #1a1a2e;
+      --secondary: #16213e;
+      --gold: #d4af37;
+      --gold-light: #f4e4b3;
+      --white: #ffffff;
+      --text-light: rgba(255, 255, 255, 0.9);
+    }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="./css/style.css">
+    /* Animated Background Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-100px) translateX(50px); }
+      50% { transform: translateY(-50px) translateX(-50px); }
+      75% { transform: translateY(-150px) translateX(100px); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 5%;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    nav.scrolled {
+      padding: 0.5rem 5%;
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: 50px;
+      object-fit: contain;
+      
+     
+    }
+
+
+
+    @keyframes logoGlow {
+      0%, 50% { text-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold); }
+      10% { text-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold), 0 0 20px var(--gold); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+      border-radius: 3px;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 5%;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.77vh;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(15, 52, 96, 0.6));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--primary);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--white), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShine 3s ease-in-out infinite;
+    }
+
+    @keyframes textShine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: 2rem;
+      color: var(--text-light);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-20px); }
+      60% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .scroll-indicator::before {
+      content: '';
+      width: 30px;
+      height: 50px;
+      border: 2px solid var(--gold);
+      border-radius: 25px;
+      display: block;
+      position: relative;
+    }
+
+    .scroll-indicator::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollDot 2s infinite;
+    }
+
+    @keyframes scrollDot {
+      0% { top: 10px; opacity: 1; }
+      100% { top: 35px; opacity: 0; }
+    }
+
+    /* Section Styling */
+    section {
+      padding: 100px 5%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Glass Card Effect */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+    }
+
+    .glass-card:hover::before {
+      transform: rotate(45deg) translateX(100%);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+      border-color: rgba(212, 175, 55, 0.3);
+    }
+
+    /* About Section */
+    .about-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      animation: floatImage 6s ease-in-out infinite;
+    }
+
+    @keyframes floatImage {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.1);
+    }
+
+    .about-content ul {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .about-content ul li {
+      padding: 1rem 0;
+      padding-left: 2.5rem;
+      position: relative;
+      animation: slideInRight 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .about-content ul li:nth-child(1) { animation-delay: 0.1s; }
+    .about-content ul li:nth-child(2) { animation-delay: 0.2s; }
+    .about-content ul li:nth-child(3) { animation-delay: 0.3s; }
+    .about-content ul li:nth-child(4) { animation-delay: 0.4s; }
+    .about-content ul li:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .about-content ul li::before {
+      content: '✨';
+      position: absolute;
+      left: 0;
+      animation: sparkle 2s infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.3) rotate(180deg); }
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 350px;
+      transition: all 0.5s ease;
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .service-card:hover img {
+      transform: scale(1.2);
+    }
+
+    .service-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 2rem;
+      transform: translateY(0);
+      transition: all 0.3s ease;
+    }
+
+    .service-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.95), rgba(26, 26, 46, 0.95));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .service-card:hover .service-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Daily Verse */
+    .daily-verse {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.3rem;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* Prayer Form */
+    .prayer-form {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--primary);
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+    }
+
+    /* Contact Grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      text-align: center;
+      animation: popIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .contact-card:nth-child(1) { animation-delay: 0.1s; }
+    .contact-card:nth-child(2) { animation-delay: 0.2s; }
+    .contact-card:nth-child(3) { animation-delay: 0.3s; }
+    .contact-card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .contact-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 5%;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        max-width: 300px;
+        background: rgba(26, 26, 46, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translateY(12px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translateY(-12px);
+      }
+
+      section {
+        padding: 60px 5%;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .glass-card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-light);
+    }
+
+    /* Floating Cross Animation */
+    .floating-cross {
+      position: fixed;
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatCross 15s ease-in-out infinite;
+    }
+
+    @keyframes floatCross {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(50px, -100px) rotate(120deg); }
+      66% { transform: translate(-50px, -50px) rotate(240deg); }
+    }
+
+    /* Bible Verse Ticker */
+    .verse-ticker {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 0;
+      overflow: hidden;
+      z-index: 999;
+      border-top: 1px solid var(--gold);
+    }
+
+    .ticker-content {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker 40s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .ticker-content span {
+      padding: 0 3rem;
+      color: var(--gold-light);
+      font-size: 0.95rem;
+    }
+
+    /* Live Service Indicator */
+    .live-indicator {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      z-index: 999;
+      box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+      animation: livePulse 2s ease-in-out infinite;
+      cursor: pointer;
+      display: none;
+    }
+
+    .live-indicator.active {
+      display: block;
+    }
+
+    .live-indicator::before {
+      content: '●';
+      margin-right: 0.5rem;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(255, 0, 0, 0.6); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Upcoming Events */
+    .events-card {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+      border-left: 4px solid var(--gold);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .events-card:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+    }
+
+    .event-date {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--primary);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Prayer Wall */
+    .prayer-wall {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .prayer-item {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .prayer-item::before {
+      content: '🙏';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 3rem;
+      opacity: 0.1;
+    }
+
+    .prayer-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+    }
+
+    /* Testimonials */
+    .testimonial-slider {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial {
+      padding: 2rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .testimonial-author {
+      margin-top: 1rem;
+      color: var(--gold);
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* Christmas/Easter Seasonal Decorations */
+    .seasonal-decor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+    .dove {
+      position: fixed;
+      font-size: 2rem;
+      animation: flyDove 20s linear infinite;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    @keyframes flyDove {
+      0% { 
+        left: -100px; 
+        top: 20%;
+        transform: rotate(0deg);
+      }
+      100% { 
+        left: 110%;
+        top: 30%;
+        transform: rotate(10deg);
+      }
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+      .verse-ticker {
+        display: none;
+      }
+
+      .live-indicator {
+        top: 70px;
+        right: 10px;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .logo-img {
+        height: 40px;
+        width: 40px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Animated Background Particles -->
+  <div class="particles" id="particles"></div>
 
-  <!-- NAV -->
-<nav class="navbar navbar-expand-lg fixed-top">
-  <div class="container d-flex align-items-center">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="./images/logo.png" alt="Church Logo" class="navbar-logo">
-      <span>TCA</span>
-    </a>
+  <!-- Floating Cross Decorations -->
+  <div class="floating-cross" style="top: 10%; left: 5%;">✝</div>
+  <div class="floating-cross" style="top: 60%; right: 10%; animation-delay: 5s;">✝</div>
+  <div class="floating-cross" style="top: 40%; left: 80%; animation-delay: 10s;">✝</div>
+
+  <!-- Flying Doves -->
+  <div class="dove" style="animation-delay: 0s;">🕊️</div>
+  <div class="dove" style="animation-delay: 10s;">🕊️</div>
+
+  <!-- Live Service Indicator -->
+  <div class="live-indicator" id="liveIndicator">
+    LIVE: Sunday Service
   </div>
-      
-      
 
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#messages">Messages</a></li> 
-          <li class="nav-item"><a class="nav-link" href="#prayer">Prayer</a></li>
-          <li class="nav-item"><a class="nav-link" href="#quiz">Quiz</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
+  <!-- Bible Verse Ticker -->
+  <div class="verse-ticker">
+    <div class="ticker-content">
+      <span>✝ சங்கீதம் 90:1 - ஆண்டவரே, தேவரீர் தலைமுறை தலைமுறையாக எங்களுக்கு அடைக்கலமானவர்</span>
+      <span>✝ யோவான் 3:16 - தேவன், தம்முடைய ஒரேபேறான குமாரனை விசுவாசிக்கிறவன் எவனோ அவன் கெட்டுப்போகாமல் நித்தியஜீவனை அடையும்படிக்கு, அவரைத் தந்தருளி, இவ்வளவாய் உலகத்தில் அன்புகூர்ந்தார்</span>
+      <span>✝ ரோமர் 12:21 - நீங்கள் இந்தப் பிரபஞ்சத்திற்கு ஒத்த வேஷந்தரியாமல், தேவனுடைய நன்மையும் பிரியமும் பரிபூரணமுமானசித்தம் இன்னதென்று பகுத்தறியத்தக்கதாக, உங்கள் மனம் புதிதாகிறதினாலே மறுரூபமாகுங்கள்</span>
+      <span>✝ மத்தேயு 5:16 - இவ்விதமாய், மனுஷர் உங்கள் நற்கிரியைகளைக் கண்டு, பரலோகத்திலிருக்கிற உங்கள் பிதாவை மகிமைப்படுத்தும்படி, உங்கள் வெளிச்சம் அவர்கள் முன்பாகப் பிரகாசிக்கக்கடவது</span>
+      <span>✝ ரோமர் 5:8 - "நாம் பாவிகளாயிருக்கையில் கிறிஸ்து நமக்காக மரித்ததினாலே, தேவன் நம்மேல்வைத்த தமது அன்பை விளங்கப்பண்ணுகிறார்</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="logo">
+        <img src="./images/logo.png" alt="TCA Logo" class="logo-img">
+        <span>TCA</span>
+      </a>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#messages">Messages</a></li>
+        <li><a href="#prayer">Prayer</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
   </nav>
 
-
- <header id="home" class="hero">
-  <!-- YouTube sample link (replace with yours) -->
-  <div class="video-bg" id="videoWrap">
-    <iframe
-      id="ytplayer"
-      src="https://www.youtube.com/embed/ph5gSZtCwgM?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=ph5gSZtCwgM"
-      title="YouTube video"
-      frameborder="0"
-      allow="autoplay; encrypted-media; fullscreen"
-      allowfullscreen
-    ></iframe>
-  </div>
-
-
-
-    <!-- Carousel fallback (images). Stacked above video and will be hidden by JS if video is usable. -->
-  
-    <div class="hero-overlay container text-center">
-      <span class="badge-gold">Welcome</span>
-      <h1 class="mt-3">Thuthi Christian Assembly</h1>
-      <p class="lead">Worship in Spirit and Truth — Join us online and in person</p>
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-bg">
+      <iframe
+        src="https://www.youtube.com/embed/ph5gSZtCwgM?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=ph5gSZtCwgM"
+        title="Church Video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
     </div>
-  </header>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Welcome</div>
+      <h1>Thuthi Christian Assembly</h1>
+      <p>Worship in Spirit and Truth — Join us online and in person</p>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
 
-  <main class="container py-5">
-
-    <section id="about" class="my-5">
-  <div class="row align-items-center">
-    <!-- Image first on mobile/tablet -->
-   <div class="col-md-6 order-1 order-md-2 text-center mb-4 mb-md-0">
-  <img src="./images/chruch.jpg" 
-       class="img-fluid rounded church-img" 
-       alt="church-photo">
-</div>
-
-
-    <!-- Text -->
-    <div class="col-md-6 order-2 order-md-1">
-      <div class="glass p-4 text-center text-md-start">
-        <div class="glass p-4 text-center text-md-start">
-  <!-- Christmas Balls -->
-  <div class="christmas-ball"></div>
-  <div class="christmas-ball"></div>
-  <div class="christmas-ball"></div>
-        <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-
- 
-        <h3 class="mb-3">About Us</h3>
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <div class="about-container">
+      <div class="about-image">
+        <img src="./images/chruch.jpg" alt="Church">
+      </div>
+      <div class="about-content glass-card">
+        <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--gold);">Experience God's Power</h3>
         <p>Welcome to <strong>Thuthi Christian Assembly</strong>, a place where the power of Jesus Christ transforms lives!</p>
-
-        <ul class="list-unstyled mt-3">
-          <li>✨ <strong>Deliverance:</strong> Satans are defeated, and darkness is driven away through the mighty name of Jesus.</li>
-          <li>🙏 <strong>Divine Healings:</strong> Many have witnessed miracles and divine healings — cancers have vanished, incurable diseases have been cured, and broken hearts have been restored through faith and prayer.</li>
-          <li>❤️ <strong>Hope for the Ignored:</strong> When doctors may have given up or patients are ignored by the world, Christ’s love reaches them with healing and hope.</li>
-          <li>🔥 <strong>Spirit-Filled Prayer:</strong> Every prayer here carries the presence of the Holy Spirit — bringing peace, deliverance, and new life.</li>
-          <li>🌟 <strong>Unshakable Faith:</strong> At our church, we believe nothing is impossible for God. Come experience His power, His love, and His miracles.</li>
+        <ul>
+          <li><strong>Deliverance:</strong> Darkness is driven away through the mighty name of Jesus</li>
+          <li><strong>Divine Healings:</strong> Witness miracles and divine healings through faith and prayer</li>
+          <li><strong>Hope for All:</strong> Christ's love reaches everyone with healing and hope</li>
+          <li><strong>Spirit-Filled Prayer:</strong> Every prayer carries the presence of the Holy Spirit</li>
+          <li><strong>Unshakable Faith:</strong> Nothing is impossible for God</li>
         </ul>
-
-        <p class="mt-3"><em>Join us for worship and witness how Jesus still heals, saves, and delivers today.</em></p>
       </div>
     </div>
-  </div>
-  </div>
-</section>
+  </section>
 
-<!-- SERVICES / EVENTS -->
-<section id="services" class="my-5">
-  <h3 class="mb-4 text-center">Services & Events</h3>
-  <div class="row g-3">
-
-    <!-- Sunday Worship -->
-    <div class="col-sm-6 col-md-3">
+  <!-- Services Section -->
+  <section id="services">
+    <h2 class="section-title">Services & Events</h2>
+    <div class="services-grid">
       <div class="service-card">
-        <img src="./images/sw.jpg" alt="">
-        <div class="service-info p-3">
+        <img src="./images/sw.jpg" alt="Sunday Worship">
+        <div class="service-info">
           <h5>Sunday Worship</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">சங்கீதம் 84:10 - " ஆயிரம் நாளைப்பார்க்கிலும் உமது பிரகாரங்களில் செல்லும் ஒரே நாள் நல்லது, ஆகாமியக் கூடாரங்களில் வாசமாயிருப்பதைப்பார்க்கிலும் என் தேவனுடைய ஆலயத்தின் வாசற்படியில் காத்திருப்பதையே தெரிந்துகொள்ளுவேன்." </p>
+        <div class="service-overlay">
+          <p>சங்கீதம் 84:10 - "ஆயிரம் நாளைப்பார்க்கிலும் உமது பிரகாரங்களில் செல்லும் ஒரே நாள் நல்லது"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Divine Healing Moments -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/ds.jpg" alt="">
-        <div class="service-info p-3">
-          <h5>Divine Healing Moments</h5>
+        <img src="./images/ds.jpg" alt="Divine Healing">
+        <div class="service-info">
+          <h5>Divine Healing</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">எரேமியா 30:17 -" நான் உனக்கு ஆரோக்கியம் வரப்பண்ணி, உன் காயங்களை ஆற்றுவேன் என்று கர்த்தர் சொல்லுகிறார். ”</p>
+        <div class="service-overlay">
+          <p>எரேமியா 30:17 - "நான் உனக்கு ஆரோக்கியம் வரப்பண்ணி, உன் காயங்களை ஆற்றுவேன்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Deliverance Through Prayer -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/ps.jpg" alt="">
-        <div class="service-info p-3">
-          <h5>Deliverance Through Prayer</h5>
+        <img src="./images/ps.jpg" alt="Prayer Service">
+        <div class="service-info">
+          <h5>Deliverance Prayer</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">மாற்கு 3:15 - " வியாதிகளைக் குணமாக்கிப் பிசாசுகளைத் துரத்தும்படி அவர்கள் அதிகாரமுடையவர்களாயிருக்கவும், அவர்களை ஏற்படுத்தினார்.”</p>
+        <div class="service-overlay">
+          <p>மாற்கு 3:15 - "வியாதிகளைக் குணமாக்கிப் பிசாசுகளைத் துரத்தும் அதிகாரம்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Women United in Prayer -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/wg.jpg" alt="">
-        <div class="service-info p-3">
-          <h5>Women United in Prayer</h5>
+        <img src="./images/wg.jpg" alt="Women's Group">
+        <div class="service-info">
+          <h5>Women United</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">நீதிமொழிகள் 31:30 - " சௌந்தரியம் வஞ்சனையுள்ளது, அழகும் வீண், கர்த்தருக்கு பயப்படுகிற ஸ்திரீயே புகழப்படுவாள். ”</p>
+        <div class="service-overlay">
+          <p>நீதிமொழிகள் 31:30 - "கர்த்தருக்கு பயப்படுகிற ஸ்திரீயே புகழப்படுவாள்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Youth Fellowship -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/ym.jpg" alt="">
-        <div class="service-info p-3">
+        <img src="./images/ym.jpg" alt="Youth Fellowship">
+        <div class="service-info">
           <h5>Youth Fellowship</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">சங்கீதம் 119:9 - " வாலிபன் தன் வழியை எதினால் சுத்தம்பண்ணுவான்? உமது வசனத்தின்படி தன்னைக் காத்துக்கொள்ளுவதினால்தானே. ”</p>
+        <div class="service-overlay">
+          <p>சங்கீதம் 119:9 - "வாலிபன் உமது வசனத்தின்படி தன்னைக் காத்துக்கொள்ளுவதினால்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Choir Practice -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/cp.jpg" alt="">
-        <div class="service-info p-3">
+        <img src="./images/cp.jpg" alt="Choir">
+        <div class="service-info">
           <h5>Choir Practice</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">சங்கீதம் 149:1 - " அல்லேலூயா, கர்த்தருக்குப் புதுப்பாட்டைப் பாடுங்கள், பரிசுத்தவான்களின் சபையிலே அவருடைய துதி விளங்குவதாக." </p>
+        <div class="service-overlay">
+          <p>சங்கீதம் 149:1 - "கர்த்தருக்குப் புதுப்பாட்டைப் பாடுங்கள்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Baptism -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/bap.jpg" alt="">
-        <div class="service-info p-3">
+        <img src="./images/bap.jpg" alt="Baptism">
+        <div class="service-info">
           <h5>Baptism</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0"> மாற்கு 16:16 - "விசுவாசமுள்ளவனாகி ஞானஸ்நானம் பெற்றவன் இரட்சிக்கப்படுவான், விசுவாசியாதவனோ ஆக்கினைக்குள்ளாகத் தீர்க்கப்படுவான். ”</p>
+        <div class="service-overlay">
+          <p>மாற்கு 16:16 - "விசுவாசமுள்ளவனாகி ஞானஸ்நானம் பெற்றவன் இரட்சிக்கப்படுவான்"</p>
         </div>
       </div>
-    </div>
-
-    <!-- Divine Blessing for Our Children -->
-    <div class="col-sm-6 col-md-3">
       <div class="service-card">
-        <img src="./images/bp.jpg" alt="">
-        <div class="service-info p-3">
-          <h5>Divine Blessing for Our Children</h5>
+        <img src="./images/bp.jpg" alt="Children's Blessing">
+        <div class="service-info">
+          <h5>Children's Blessing</h5>
         </div>
-        <div class="service-overlay p-3">
-          <p class="mb-0">சங்கீதம் 127:4 - "இதோ, பிள்ளைகள் கர்த்தரால் வரும் சுதந்தரம், கர்ப்பத்தின் கனி அவரால் கிடைக்கும் பலன்." </p>
+        <div class="service-overlay">
+          <p>சங்கீதம் 127:4 - "பிள்ளைகள் கர்த்தரால் வரும் சுதந்தரம்"</p>
         </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-  <section id="messages" class="my-5">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Today's Word</h3>
-  </div>
-  <div class="p-4 glass">
-    <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-    <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-    <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-    <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-    <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-    <p id="dailyVerse" class="mb-0 fs-5">Loading today's verse...</p>
-  </div>
-</section>
-
-<script>
-async function loadDailyVerse() {
-  const verseEl = document.getElementById('dailyVerse');
-  try {
-    const res = await fetch("tamil_verses.json");
-    const verses = await res.json();
-
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay) - 1;
-
-    const verse = verses[dayOfYear % verses.length];
-
-    // Display text and reference cleanly
-    verseEl.innerHTML = `${verse.text} <br><small class="text-muted">— ${verse.reference}</small>`;
-
-  } catch (err) {
-    console.error('Error loading daily verse:', err);
-    verseEl.textContent = "Unable to load verse at the moment.";
-  }
-}
-loadDailyVerse();
-</script>
-
-    <!-- PRAYER FORM -->
-   <section id="prayer" class="my-5">
-  <h3>Prayer Request</h3>
-  <form id="prayerForm" action="https://formsubmit.co/tcaprayer1@gmail.com" method="POST" class="glass p-4">
-       <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-    <!-- Hidden input to disable captcha if needed -->
-    <input type="hidden" name="_captcha" value="false">
-    <!-- Optional redirect after submission -->
-    <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
-
-    <div class="mb-3">
-      <label class="form-label">Name</label>
-      <input name="name" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label"> Address</label>
-      <input name="address" type="text" class="form-control">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Prayer Request</label>
-      <textarea name="message" class="form-control" rows="4" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-gold">Send Prayer Request</button>
-    <div id="prayerMsg" class="mt-3 text-success"></div>
-  </form>
-</section>
-
-<script>
-  const form = document.getElementById('prayerForm');
-  const prayerMsg = document.getElementById('prayerMsg');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // prevent default form submission
-
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        prayerMsg.textContent = "Thank you! Your prayer request has been sent.";
-        form.reset();
-      } else {
-        prayerMsg.textContent = "Oops! There was a problem submitting your request.";
-      }
-    } catch (error) {
-      prayerMsg.textContent = "Network error. Please try again later.";
-    }
-  });
-</script>
-
-
-    <!-- QUIZ -->
-    <section id="quiz" class="my-5">
-      <h3>Bible Quiz</h3>
-      <div class="glass p-4">
-           <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-        <p>10 random questions. Click Start to begin.</p>
-        <a href="./pages/quiz.html" class="btn btn-gold">Start Quiz</a>
-       
+  <!-- Upcoming Events Section -->
+  <section id="events">
+    <h2 class="section-title">Upcoming Events</h2>
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="events-card glass-card">
+        <span class="event-date">📅 Every Sunday - 8:00 AM  && 7.00 PM</span>
+        <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">Sunday Morning Worship</h4>
+        <p>Join us for powerful worship, anointed preaching, and divine encounters with God's presence.</p>
       </div>
-    </section>
-
-    <!-- CONTACT -->
- <section id="contact" class="my-5">
-  <h3 class="section-title">📞 Contact Us</h3>
-
-  <div class="contact-container">
-    <div class="contact-card glass">
       
-         <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-      <div class="contact-icon">🏢</div>
-      <h5>Visit Us</h5>
-      <p>Palayaettai,<br>Tirunelveli, Tamil Nadu</p>
-    </div>
+      <div class="events-card glass-card">
+        <span class="event-date">📅 Every Wednesday - 7:00 PM</span>
+        <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;"> Bible Study</h4>
+        <p>Deepen your faith through interactive Bible study and powerful intercessory prayer sessions.</p>
+      </div>
+      
+      <div class="events-card glass-card">
+        <span class="event-date">📅 Friday Evening - 10:30 AM</span>
+        <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">Fasting Prayer</h4>
+        <p>A sacred time to seek God’s presence, receive strength, and grow deeper through fasting and prayer.</p>
+      </div>
 
-    <div class="contact-card glass">
-         <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-      <div class="contact-icon">📞</div>
-      <h5>Call Us</h5>
-      <p>+91 9443705974</p>
+      <div class="events-card glass-card">
+        <span class="event-date">📅 First Saturday - 7:00 PM</span>
+        <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">Women's Prayer Fellowship</h4>
+        <p>Women gathering together for worship, testimony, and powerful intercession.</p>
+      </div>
+         <div class="events-card glass-card">
+        <span class="event-date">📅 First Tuesday - 6:00 PM</span>
+        <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">House Prayer Meeting</h4>
+        <p>A blessed home gathering to worship, share God’s Word, and pray together for family blessings.</p>
+      </div>
     </div>
-
-    <div class="contact-card glass">
-         <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-      <div class="contact-icon">✉️</div>
-      <h5>Email Us</h5>
-      <p>tcaprayer1@gmail.com</p>
-    </div>
-     <div class="contact-card glass">
-         <div class="snowflake" style="left:10%; animation-duration:9s;"></div>
-  <div class="snowflake" style="left:30%; animation-duration:12s;"></div>
-  <div class="snowflake" style="left:50%; animation-duration:10s;"></div>
-  <div class="snowflake" style="left:70%; animation-duration:11s;"></div>
-  <div class="snowflake" style="left:90%; animation-duration:8s;"></div>
-      <div class="contact-icon">✉️</div>
-      <h5>🎥 YouTube</h5>
-<p>
-  <a href="https://youtube.com/@thuthichristianassembly-tca?si=qNwXgo85Ob0c2iam" 
-     target="_blank" 
-     class="text-decoration-none text-white fw-bold">
-    @ThuthiChristianAssembly-TCA
-  </a>
-</p>
-    </div>
+    
    
-  </div>
-</section>
+  </section>
 
+  <!-- Testimonials Section -->
+  <section id="testimonials" style="background: rgba(0,0,0,0.2); padding: 100px 5%;">
+    <h2 class="section-title">Testimonies of God's Goodness</h2>
+    <div class="testimonial-slider glass-card">
+      <div class="testimonial">
+        <p>"My son was born at 8 months, a premature baby. He had a painful motion problem — every time he tried, he would cry so much in pain. We went to many hospitals, but every doctor said there was nothing wrong. Still, as parents, our hearts were breaking.
 
+Then we came to church, prayed, and placed our hope in God. Through the powerful prayers and the love of this church family, God touched and healed my son completely."</p>
+        <div class="testimonial-author">— Sister Malar, Tirunelveli</div>
+      </div>
+    </div>
+    
+    <div class="prayer-wall" style="margin-top: 3rem;">
+      <div class="prayer-item">
+        <strong style="color: var(--gold);">Financial Breakthrough</strong>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">God provided a job after 2 years of unemployment!</p>
+      </div>
+      <div class="prayer-item">
+        <strong style="color: var(--gold);">Divine Healing</strong>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Healed from cancer - doctors confirmed!</p>
+      </div>
+      <div class="prayer-item">
+        <strong style="color: var(--gold);">Family Restoration</strong>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Broken relationships restored by God's love</p>
+      </div>
+      <div class="prayer-item">
+        <strong style="color: var(--gold);">Deliverance</strong>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Freedom from 15 years of bondage!</p>
+      </div>
+    </div>
+  </section>
 
-  </main>
+  <!-- Daily Verse -->
+  <section id="messages">
+    <h2 class="section-title">Today's Word</h2>
+    <div class="glass-card">
+      <p class="daily-verse" id="dailyVerse">Loading today's verse...</p>
+    </div>
+  </section>
 
-  <!-- FOOTER -->
-  <footer class="text-center py-4">
-    <small>© Thuthi Christian Assembly | Designed by Kishore</small>
+  <!-- Prayer Form -->
+  <section id="prayer">
+    <h2 class="section-title">Prayer Request</h2>
+    <form class="prayer-form glass-card" id="prayerForm" action="https://formsubmit.co/tcaprayer1@gmail.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" required>
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" name="address">
+      </div>
+      <div class="form-group">
+        <label>Prayer Request</label>
+        <textarea name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Send Prayer Request</button>
+      <div id="prayerMsg" style="margin-top: 1rem; color: var(--gold);"></div>
+    </form>
+  </section>
+
+  <!-- Quiz Section -->
+  <section id="quiz" style="text-align: center;">
+    <h2 class="section-title">Bible Quiz</h2>
+    <div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+      <p style="margin-bottom: 2rem; font-size: 1.2rem;">Test your Bible knowledge with 10 random questions</p>
+      <a href="./pages/quiz.html" class="btn-primary">Start Quiz</a>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-grid">
+      <div class="contact-card glass-card">
+        <div class="contact-icon">🏢</div>
+        <h5 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem;">Visit Us</h5>
+        <p>Palayaettai,<br>Tirunelveli, Tamil Nadu</p>
+      </div>
+      <div class="contact-card glass-card">
+        <div class="contact-icon">📞</div>
+        <h5 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem;">Call Us</h5>
+        <p>+91 9443705974</p>
+      </div>
+      <div class="contact-card glass-card">
+        <div class="contact-icon">✉️</div>
+        <h5 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem;">Email Us</h5>
+        <p>tcaprayer1@gmail.com</p>
+      </div>
+      <div class="contact-card glass-card">
+        <div class="contact-icon">🎥</div>
+        <h5 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem;">YouTube</h5>
+        <p><a href="https://youtube.com/@thuthichristianassembly-tca?si=qNwXgo85Ob0c2iam" target="_blank" style="color: var(--text-light); text-decoration: none;">@ThuthiChristianAssembly-TCA</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <small>© 2025 Thuthi Christian Assembly | Designed by Kishore</small>
   </footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Particles Animation
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.width = Math.random() * 4 + 2 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+      particlesContainer.appendChild(particle);
+    }
 
-  <!-- Custom JS -->
-  <script src="/script.js"></script>
-  
+    // Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Daily Verse Loader
+    async function loadDailyVerse() {
+      const verseEl = document.getElementById('dailyVerse');
+      try {
+        const res = await fetch("tamil_verses.json");
+        const verses = await res.json();
+
+        const now = new Date();
+        const start = new Date(now.getFullYear(), 0, 0);
+        const diff = now - start;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay) - 1;
+
+        const verse = verses[dayOfYear % verses.length];
+        verseEl.innerHTML = `"${verse.text}" <br><small style="color: var(--gold); margin-top: 1rem; display: inline-block;">— ${verse.reference}</small>`;
+      } catch (err) {
+        console.error('Error loading daily verse:', err);
+        verseEl.textContent = "Unable to load verse at the moment. Please try again later.";
+      }
+    }
+    loadDailyVerse();
+
+    // Prayer Form Handler
+    const prayerForm = document.getElementById('prayerForm');
+    const prayerMsg = document.getElementById('prayerMsg');
+
+    prayerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(prayerForm);
+      
+      try {
+        const response = await fetch(prayerForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          prayerMsg.textContent = "✓ Thank you! Your prayer request has been sent. We will pray for you.";
+          prayerMsg.style.color = 'var(--gold)';
+          prayerForm.reset();
+          
+          setTimeout(() => {
+            prayerMsg.textContent = '';
+          }, 5000);
+        } else {
+          prayerMsg.textContent = "⚠ There was a problem submitting your request. Please try again.";
+          prayerMsg.style.color = '#ff6b6b';
+        }
+      } catch (error) {
+        prayerMsg.textContent = "⚠ Network error. Please check your connection and try again.";
+        prayerMsg.style.color = '#ff6b6b';
+      }
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all glass cards and service cards
+    document.querySelectorAll('.glass-card, .service-card, .about-image').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Parallax Effect on Scroll
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroContent = document.querySelector('.hero-content');
+      if (heroContent) {
+        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+        heroContent.style.opacity = 1 - (scrolled / 500);
+      }
+    });
+
+    // Add hover effect sound (optional - requires audio files)
+    const cards = document.querySelectorAll('.service-card, .glass-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      });
+    });
+
+    // Dynamic year in footer
+    const currentYear = new Date().getFullYear();
+    document.querySelector('footer small').textContent = `© ${currentYear} Thuthi Christian Assembly | Designed by Kishore`;
+  </script>
 </body>
 </html>
