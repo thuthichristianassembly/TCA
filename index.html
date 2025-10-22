@@ -97,11 +97,7 @@
       height: 50px;
       width: 50px;
       object-fit: contain;
-      
-     
     }
-
-
 
     @keyframes logoGlow {
       0%, 50% { text-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold); }
@@ -621,6 +617,49 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    /* Music Control Button */
+    .music-control {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+      transition: all 0.3s ease;
+      animation: musicPulse 2s ease-in-out infinite;
+    }
+
+    .music-control:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+    }
+
+    .music-control #musicIcon {
+      font-size: 1.8rem;
+      animation: musicNote 1s ease-in-out infinite;
+    }
+
+    .music-control.paused #musicIcon {
+      animation: none;
+    }
+
+    @keyframes musicPulse {
+      0%, 100% { box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
+      50% { box-shadow: 0 5px 30px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.3); }
+    }
+
+    @keyframes musicNote {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.1); }
+    }
+
     /* Responsive Design */
     @media (max-width: 1024px) {
       .about-container {
@@ -679,6 +718,37 @@
 
       .contact-grid {
         grid-template-columns: 1fr;
+      }
+
+      .verse-ticker {
+        display: none;
+      }
+
+      .live-indicator {
+        top: 70px;
+        right: 10px;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .logo-img {
+        height: 40px;
+        width: 40px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      .music-control {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .music-control #musicIcon {
+        font-size: 1.5rem;
       }
     }
 
@@ -882,7 +952,7 @@
       font-style: normal;
     }
 
-    /* Christmas/Easter Seasonal Decorations */
+    /* Seasonal Decorations */
     .seasonal-decor {
       position: fixed;
       pointer-events: none;
@@ -910,32 +980,15 @@
         transform: rotate(10deg);
       }
     }
-
-    /* Mobile Responsive Adjustments */
-    @media (max-width: 768px) {
-      .verse-ticker {
-        display: none;
-      }
-
-      .live-indicator {
-        top: 70px;
-        right: 10px;
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-      }
-
-      .logo-img {
-        height: 40px;
-        width: 40px;
-      }
-
-      .logo {
-        font-size: 1.5rem;
-      }
-    }
   </style>
 </head>
 <body>
+  <!-- Background Music Player -->
+  <audio id="bgMusicPlayer" preload="auto"></audio>
+  <div class="music-control" id="musicControl">
+    <span id="musicIcon">🎵</span>
+  </div>
+
   <!-- Animated Background Particles -->
   <div class="particles" id="particles"></div>
 
@@ -956,8 +1009,8 @@
   <!-- Bible Verse Ticker -->
   <div class="verse-ticker">
     <div class="ticker-content">
-      <span>✝ சங்கீதம் 90:1 - ஆண்டவரே, தேவரீர் தலைமுறை தலைமுறையாக எங்களுக்கு அடைக்கலமானவர்</span>
-      <span>✝ யோவான் 3:16 - தேவன், தம்முடைய ஒரேபேறான குமாரனை விசுவாசிக்கிறவன் எவனோ அவன் கெட்டுப்போகாமல் நித்தியஜீவனை அடையும்படிக்கு, அவரைத் தந்தருளி, இவ்வளவாய் உலகத்தில் அன்புகூர்ந்தார்</span>
+      <span>✝ சங்கீதம் 90:1 - ஆண்டவரே, தேவரீர் தலைமுறை தலைமுறையாக எங்களுக்கு அடைக்கலமானவர்</span>
+      <span>✝ யோவான் 3:16 - தேவன், தம்முடைய ஒரேபேறான குமாரனை விசுவாசிக்கிறவன் எவனோ அவன் கெட்டுப்போகாமல் நித்தியஜீவனை அடையும்படிக்கு, அவரைத் தந்தருளி, இவ்வளவாய் உலகத்தில் அன்புகூர்ந்தார்</span>
       <span>✝ ரோமர் 12:21 - நீங்கள் இந்தப் பிரபஞ்சத்திற்கு ஒத்த வேஷந்தரியாமல், தேவனுடைய நன்மையும் பிரியமும் பரிபூரணமுமானசித்தம் இன்னதென்று பகுத்தறியத்தக்கதாக, உங்கள் மனம் புதிதாகிறதினாலே மறுரூபமாகுங்கள்</span>
       <span>✝ மத்தேயு 5:16 - இவ்விதமாய், மனுஷர் உங்கள் நற்கிரியைகளைக் கண்டு, பரலோகத்திலிருக்கிற உங்கள் பிதாவை மகிமைப்படுத்தும்படி, உங்கள் வெளிச்சம் அவர்கள் முன்பாகப் பிரகாசிக்கக்கடவது</span>
       <span>✝ ரோமர் 5:8 - "நாம் பாவிகளாயிருக்கையில் கிறிஸ்து நமக்காக மரித்ததினாலே, தேவன் நம்மேல்வைத்த தமது அன்பை விளங்கப்பண்ணுகிறார்</span>
@@ -1128,7 +1181,7 @@
       <div class="events-card glass-card">
         <span class="event-date">📅 Every Friday  - 10:30 AM</span>
         <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">Fasting Prayer</h4>
-        <p>A sacred time to seek God’s presence, receive strength, and grow deeper through fasting and prayer.</p>
+        <p>A sacred time to seek God's presence, receive strength, and grow deeper through fasting and prayer.</p>
       </div>
 
       <div class="events-card glass-card">
@@ -1139,11 +1192,9 @@
          <div class="events-card glass-card">
         <span class="event-date">📅 Every Tuesday - 6:00 PM</span>
         <h4 style="color: var(--gold); margin: 1rem 0 0.5rem;">House Prayer Meeting</h4>
-        <p>A blessed home gathering to worship, share God’s Word, and pray together for family blessings.</p>
+        <p>A blessed home gathering to worship, share God's Word, and pray together for family blessings.</p>
       </div>
     </div>
-    
-   
   </section>
 
   <!-- Testimonials Section -->
@@ -1250,6 +1301,101 @@ Then we came to church, prayed, and placed our hope in God. Through the powerful
   </footer>
 
   <script>
+    // Background Music Player with Random Song Selection - AUTOPLAY ON PAGE LOAD
+    const bgMusicPlayer = document.getElementById('bgMusicPlayer');
+    const musicControl = document.getElementById('musicControl');
+    const musicIcon = document.getElementById('musicIcon');
+    
+    const totalSongs = 60; // Total number of songs in the songs folder
+    let playedSongs = [];
+    let isPlaying = false;
+
+    // Function to get random song that hasn't been played yet
+    function getRandomSong() {
+      if (playedSongs.length === totalSongs) {
+        playedSongs = []; // Reset if all songs have been played
+      }
+      
+      let songNumber;
+      do {
+        songNumber = Math.floor(Math.random() * totalSongs) + 1;
+      } while (playedSongs.includes(songNumber));
+      
+      playedSongs.push(songNumber);
+      return `./songs/song${songNumber}.mp3`;
+    }
+
+    // Function to play random song
+    function playRandomSong() {
+      const songPath = getRandomSong();
+      bgMusicPlayer.src = songPath;
+      bgMusicPlayer.volume = 0.3; // Set to 30% volume (decent level)
+      
+      // Attempt to play with proper error handling
+      const playPromise = bgMusicPlayer.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          musicControl.classList.remove('paused');
+          musicIcon.textContent = '🎵';
+        }).catch(err => {
+          console.log('Autoplay prevented by browser, will play on first user interaction:', err);
+          isPlaying = false;
+        });
+      }
+    }
+
+    // When a song ends, play the next random song
+    bgMusicPlayer.addEventListener('ended', () => {
+      playRandomSong();
+    });
+
+    // Handle errors (e.g., if song file doesn't exist)
+    bgMusicPlayer.addEventListener('error', () => {
+      console.log('Error loading song, trying next...');
+      playRandomSong();
+    });
+
+    // Music control toggle
+    musicControl.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusicPlayer.pause();
+        isPlaying = false;
+        musicControl.classList.add('paused');
+        musicIcon.textContent = '🔇';
+      } else {
+        if (!bgMusicPlayer.src || bgMusicPlayer.ended) {
+          playRandomSong();
+        } else {
+          bgMusicPlayer.play().then(() => {
+            isPlaying = true;
+            musicControl.classList.remove('paused');
+            musicIcon.textContent = '🎵';
+          }).catch(err => {
+            console.log('Play failed:', err);
+          });
+        }
+      }
+    });
+
+    // IMMEDIATE AUTOPLAY - Start playing as soon as script loads
+    playRandomSong();
+
+    // Fallback: Try again on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!isPlaying) {
+        playRandomSong();
+      }
+    });
+
+    // Additional fallback: Start on first user click if browser blocks autoplay
+    document.addEventListener('click', function enableAudioOnFirstClick() {
+      if (!isPlaying && bgMusicPlayer.paused) {
+        playRandomSong();
+      }
+    }, { once: true });
+
     // Particles Animation
     const particlesContainer = document.getElementById('particles');
     for (let i = 0; i < 30; i++) {
