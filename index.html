@@ -1358,7 +1358,8 @@ Then we came to church, prayed, and placed our hope in God. Through the powerful
     });
 
     // Music control toggle
-    musicControl.addEventListener('click', () => {
+    musicControl.addEventListener('click', (e) => {
+      e.preventDefault(); 
       if (isPlaying) {
         bgMusicPlayer.pause();
         isPlaying = false;
