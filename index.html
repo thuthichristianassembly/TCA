@@ -1659,6 +1659,26 @@ Then we came to church, prayed, and placed our hope in God. Through the powerful
     // Dynamic year in footer
     const currentYear = new Date().getFullYear();
     document.querySelector('footer small').textContent = `© ${currentYear} Thuthi Christian Assembly | Designed by Kishore`;
+
+    const translateBtn = document.getElementById("translateBtn");
+  const tamilContent = document.getElementById("storyContent");
+  const englishContent = document.getElementById("storyContentEnglish");
+
+  let isTamil = true;
+
+  translateBtn.addEventListener("click", () => {
+    if (isTamil) {
+      tamilContent.style.display = "none";
+      englishContent.style.display = "block";
+      translateBtn.textContent = "தமிழில் திருப்பவும்"; // Switch to Tamil
+      isTamil = false;
+    } else {
+      tamilContent.style.display = "block";
+      englishContent.style.display = "none";
+      translateBtn.textContent = "Translate to English"; // Switch to English
+      isTamil = true;
+    }
+  });
   </script>
 </body>
 </html>
