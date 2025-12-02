@@ -565,6 +565,12 @@
       box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
     }
 
+    .biography-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--primary);
+      transform: scale(1.05);
+    }
+
     /* Contact Grid */
     .contact-grid {
       display: grid;
@@ -1100,79 +1106,135 @@
         </div>
       </div>
 
-      <!-- Pastor's Story -->
+      <!-- Leaders' Biographies -->
       <div class="glass-card pastor-story">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
           <h3 style="color: var(--gold); font-size: 2rem;">எங்கள் பயணம் - Our Journey</h3>
-          <button id="translateBtn" class="btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+          <p style="color: var(--text-light); margin-top: 1rem;">Choose a biography to read:</p>
+          <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+            <button id="pastorBtn" class="btn-primary biography-btn active" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+              Pastor Alex's Biography
+            </button>
+            <button id="sisterBtn" class="btn-primary biography-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+              Sister Thilaga's Biography
+            </button>
+          </div>
+        </div>
+
+        <!-- Pastor Alex Biography -->
+        <div id="pastorBio" class="biography-content">
+          <div id="pastorContentTamil" class="story-tamil">
+            <h4 style="color: var(--gold); margin-bottom: 1rem;">பாஸ்டர் அலெக்ஸ் அவர்களின் வாழ்க்கை வரலாறு</h4>
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              தூய்மையான இதயத்துடன் கர்த்தருக்கு சேவை செய்ய அழைக்கப்பட்ட ஊழியர்,
+              இளம் வயதிலேயே தேவனுடைய அழைப்பை உணர்ந்து, அவருடைய வார்த்தையை கற்க
+              பைபிள் கல்லூரியில் படித்தார்.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              கர்த்தருடைய வழிநடத்துதலின் கீழ், துதி கிறிஸ்தவ சபையை நிறுவினார்.
+              ஆரம்பத்தில் சிறிய குழுவாக இருந்தாலும், தேவனுடைய கிருபையால் இன்று
+              பல ஆத்துமாக்கள் இரட்சிக்கப்பட்டு, குணமாக்கப்பட்டு, விடுதலையை அனுபவிக்கும்
+              ஒரு வலிமையான சபையாக வளர்ந்துள்ளது.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              பாஸ்டர் அலெக்ஸ் அவர்களின் போதனைகள் வேதாகமத்தின் அடித்தளத்தில் வேரூன்றியவை.
+              அவர் தேவனுடைய ராஜ்யத்தை கட்டியெழுப்பும் பணியில் அர்ப்பணிப்புடன் ஊழியம் செய்து வருகிறார்.
+            </p>
+
+            <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
+              "கர்த்தருடைய கிருபையால் மட்டுமே இந்த ஊழியம் சாத்தியம். அவர் நம்மை அழைத்தார்,
+              அவர் நம்மை பலப்படுத்துகிறார், அவரே எல்லா மகிமைக்கும் தகுதியானவர்."
+              <br><strong>— பாஸ்டர் அலெக்ஸ்</strong>
+            </blockquote>
+          </div>
+
+          <div id="pastorContentEnglish" class="story-english" style="display: none;">
+            <h4 style="color: var(--gold); margin-bottom: 1rem;">Pastor Alex's Biography</h4>
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              Called to serve the Lord with a pure heart, Pastor Alex recognized God's calling from a young age
+              and studied at Bible College to deepen his understanding of God's Word.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              Under the Lord's guidance, he founded Thuthi Christian Assembly.
+              What began as a small group has grown by God's grace into a powerful congregation
+              where countless souls are saved, healed, and set free.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              Pastor Alex's teachings are deeply rooted in biblical foundation.
+              He is dedicated to building God's Kingdom with unwavering commitment.
+            </p>
+
+            <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
+              "Only by the grace of the Lord is this ministry possible. He called us,
+              He strengthens us, and He alone deserves all the glory."
+              <br><strong>— Pastor Alex</strong>
+            </blockquote>
+          </div>
+
+          <button id="pastorTranslateBtn" class="btn-primary" style="margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem;">
             Translate to English
           </button>
         </div>
-        
-        <div id="storyContent" class="story-tamil">
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            தூய்மையான இதயத்துடன் கர்த்தருக்கு சேவை செய்ய அழைக்கப்பட்ட ஊழியர்கள், 
-            இளம் வயதிலேயே தேவனுடைய அழைப்பை உணர்ந்து, அவருடைய வார்த்தையை கற்க 
-            [பைபிள் கல்லூரி பெயர்] என்ற பைபிள் கல்லூரியில் படித்தார்கள்.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            கர்த்தருடைய வழிநடத்துதலின் கீழ், [வருடம்] ஆம் ஆண்டு துதி கிறிஸ்தவ சபை என்ற 
-            திருச்சபையை நிறுவினார்கள். ஆரம்பத்தில் சிறிய குழுவாக இருந்தாலும், 
-            தேவனுடைய கிருபையால் இன்று பல ஆத்துமாக்கள் இரட்சிக்கப்பட்டு, 
-            குணமாக்கப்பட்டு, விடுதலையை அனுபவிக்கும் ஒரு வலிமையான சபையாக வளர்ந்துள்ளது.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            பாஸ்டர் அவர்களின் போதனைகள் வேதாகமத்தின் அடித்தளத்தில் வேரூன்றியவை. 
-            பாஸ்டர் அம்மா அவர்கள் ஜெபத்தின் சக்தியை நம்பி, சபையின் பெண்களுக்கு 
-            வழிகாட்டியாக இருக்கிறார்கள். இருவரும் இணைந்து தேவனுடைய ராஜ்யத்தை 
-            கட்டியெழுப்பும் பணியில் அர்ப்பணிப்புடன் ஊழியம் செய்து வருகிறார்கள்.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            இவர்களின் ஊழியத்தின் மூலம் எண்ணற்ற அற்புதங்கள், குணமாக்குதல்கள், 
-            விடுதலைகள் நடந்துள்ளன. ஒவ்வொரு ஆத்துமாவும் கர்த்தருக்கு விலையேறப்பெற்றது 
-            என்ற நம்பிக்கையுடன், அன்புடனும் பொறுமையுடனும் மக்களை கர்த்தரிடம் கொண்டு 
-            வருகிறார்கள்.
-          </p>
-          
-          <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
-            "கர்த்தருடைய கிருபையால் மட்டுமே இந்த ஊழியம் சாத்தியம். அவர் நம்மை அழைத்தார், 
-            அவர் நம்மை பலப்படுத்துகிறார், அவரே எல்லா மகிமைக்கும் தகுதியானவர்." 
-            <br><strong>— பாஸ்டர் & பாஸ்டர் அம்மா</strong>
-          </blockquote>
-        </div>
 
-        <div id="storyContentEnglish" class="story-english" style="display: none;">
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            Called to serve the Lord with pure hearts, our pastors recognized God's calling from a young age 
-            and studied at [Bible College Name] to deepen their understanding of God's Word.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            Under the Lord's guidance, they founded Thuthi Christian Assembly in [Year]. 
-            What began as a small group has grown by God's grace into a powerful congregation 
-            where countless souls are saved, healed, and set free.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            Pastor's teachings are deeply rooted in biblical foundation. Pastor Amma believes 
-            in the power of prayer and serves as a guiding light for the women in the church. 
-            Together, they are dedicated to building God's Kingdom with unwavering commitment.
-          </p>
-          
-          <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
-            Through their ministry, countless miracles, healings, and deliverances have taken place. 
-            With the belief that every soul is precious to the Lord, they bring people to Christ 
-            with love and patience.
-          </p>
-          
-          <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
-            "Only by the grace of the Lord is this ministry possible. He called us, 
-            He strengthens us, and He alone deserves all the glory." 
-            <br><strong>— Pastor & Pastor Amma</strong>
-          </blockquote>
+        <!-- Sister Thilaga Biography -->
+        <div id="sisterBio" class="biography-content" style="display: none;">
+          <div id="sisterContentTamil" class="story-tamil">
+            <h4 style="color: var(--gold); margin-bottom: 1rem;">சிஸ்டர் திலகா அவர்களின் வாழ்க்கை வரலாறு</h4>
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              தூய்மையான இதயத்துடன் கர்த்தருக்கு சேவை செய்ய அழைக்கப்பட்ட ஊழியர்,
+              சிஸ்டர் திலகா இளம் வயதிலேயே தேவனுடைய அழைப்பை உணர்ந்து,
+              ஜெபத்தின் சக்தியை நம்பி வாழ்க்கையை அர்ப்பணித்தார்.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              சபையின் பெண்களுக்கு வழிகாட்டியாக இருக்கும் சிஸ்டர் திலகா,
+              தேவனுடைய அன்பை எல்லோருக்கும் கொண்டு சேர்க்கும் பணியில் ஈடுபட்டுள்ளார்.
+              அவரது ஜெபங்கள் மூலம் எண்ணற்ற அற்புதங்கள் நடந்துள்ளன.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              ஒவ்வொரு ஆத்துமாவும் கர்த்தருக்கு விலையேறப்பெற்றது என்ற நம்பிக்கையுடன்,
+              அன்புடனும் பொறுமையுடனும் மக்களை கர்த்தரிடம் கொண்டு வருகிறார்.
+            </p>
+
+            <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
+              "கர்த்தருடைய கிருபையால் மட்டுமே இந்த ஊழியம் சாத்தியம். அவர் நம்மை அழைத்தார்,
+              அவர் நம்மை பலப்படுத்துகிறார், அவரே எல்லா மகிமைக்கும் தகுதியானவர்."
+              <br><strong>— சிஸ்டர் திலகா</strong>
+            </blockquote>
+          </div>
+
+          <div id="sisterContentEnglish" class="story-english" style="display: none;">
+            <h4 style="color: var(--gold); margin-bottom: 1rem;">Sister Thilaga's Biography</h4>
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              Called to serve the Lord with a pure heart, Sister Thilaga recognized God's calling from a young age
+              and dedicated her life to believing in the power of prayer.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              As a guiding light for the women in the church, Sister Thilaga is engaged in the ministry
+              of bringing God's love to everyone. Countless miracles have happened through her prayers.
+            </p>
+
+            <p style="line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;">
+              With the belief that every soul is precious to the Lord,
+              she brings people to Christ with love and patience.
+            </p>
+
+            <blockquote style="border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--gold-light);">
+              "Only by the grace of the Lord is this ministry possible. He called us,
+              He strengthens us, and He alone deserves all the glory."
+              <br><strong>— Sister Thilaga</strong>
+            </blockquote>
+          </div>
+
+          <button id="sisterTranslateBtn" class="btn-primary" style="margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.8rem;">
+            Translate to English
+          </button>
         </div>
       </div>
     </div>
@@ -1653,25 +1715,78 @@ Then we came to church, prayed, and placed our hope in God. Through the powerful
     const currentYear = new Date().getFullYear();
     document.querySelector('footer small').textContent = `© ${currentYear} Thuthi Christian Assembly | Designed by Kishore`;
 
-    const translateBtn = document.getElementById("translateBtn");
-  const tamilContent = document.getElementById("storyContent");
-  const englishContent = document.getElementById("storyContentEnglish");
+    // Biography Selection
+    const pastorBtn = document.getElementById("pastorBtn");
+    const sisterBtn = document.getElementById("sisterBtn");
+    const pastorBio = document.getElementById("pastorBio");
+    const sisterBio = document.getElementById("sisterBio");
+    const biographyBtns = document.querySelectorAll(".biography-btn");
 
-  let isTamil = true;
+    function showBiography(bioType) {
+      // Hide all biographies
+      document.querySelectorAll(".biography-content").forEach(bio => {
+        bio.style.display = "none";
+      });
 
-  translateBtn.addEventListener("click", () => {
-    if (isTamil) {
-      tamilContent.style.display = "none";
-      englishContent.style.display = "block";
-      translateBtn.textContent = "தமிழில் திருப்பவும்"; // Switch to Tamil
-      isTamil = false;
-    } else {
-      tamilContent.style.display = "block";
-      englishContent.style.display = "none";
-      translateBtn.textContent = "Translate to English"; // Switch to English
-      isTamil = true;
+      // Remove active class from all buttons
+      biographyBtns.forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      // Show selected biography
+      if (bioType === "pastor") {
+        pastorBio.style.display = "block";
+        pastorBtn.classList.add("active");
+      } else if (bioType === "sister") {
+        sisterBio.style.display = "block";
+        sisterBtn.classList.add("active");
+      }
     }
-  });
+
+    pastorBtn.addEventListener("click", () => showBiography("pastor"));
+    sisterBtn.addEventListener("click", () => showBiography("sister"));
+
+    // Translation for Pastor Biography
+    const pastorTranslateBtn = document.getElementById("pastorTranslateBtn");
+    const pastorContentTamil = document.getElementById("pastorContentTamil");
+    const pastorContentEnglish = document.getElementById("pastorContentEnglish");
+
+    let pastorIsTamil = true;
+
+    pastorTranslateBtn.addEventListener("click", () => {
+      if (pastorIsTamil) {
+        pastorContentTamil.style.display = "none";
+        pastorContentEnglish.style.display = "block";
+        pastorTranslateBtn.textContent = "தமிழில் திருப்பவும்";
+        pastorIsTamil = false;
+      } else {
+        pastorContentTamil.style.display = "block";
+        pastorContentEnglish.style.display = "none";
+        pastorTranslateBtn.textContent = "Translate to English";
+        pastorIsTamil = true;
+      }
+    });
+
+    // Translation for Sister Biography
+    const sisterTranslateBtn = document.getElementById("sisterTranslateBtn");
+    const sisterContentTamil = document.getElementById("sisterContentTamil");
+    const sisterContentEnglish = document.getElementById("sisterContentEnglish");
+
+    let sisterIsTamil = true;
+
+    sisterTranslateBtn.addEventListener("click", () => {
+      if (sisterIsTamil) {
+        sisterContentTamil.style.display = "none";
+        sisterContentEnglish.style.display = "block";
+        sisterTranslateBtn.textContent = "தமிழில் திருப்பவும்";
+        sisterIsTamil = false;
+      } else {
+        sisterContentTamil.style.display = "block";
+        sisterContentEnglish.style.display = "none";
+        sisterTranslateBtn.textContent = "Translate to English";
+        sisterIsTamil = true;
+      }
+    });
   </script>
 </body>
 </html>
